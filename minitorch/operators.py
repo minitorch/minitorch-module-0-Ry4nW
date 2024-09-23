@@ -34,6 +34,56 @@ from typing import Callable, Iterable
 
 # TODO: Implement for Task 0.1.
 
+def mul(x: float, y: float):
+    return x * y
+
+def id(x: float):
+    return id(x)
+
+def add(x: float, y: float):
+    return x + y
+
+def neg(x: float):
+    return -x
+
+def lt(x: float, y: float):
+    return x < y
+
+def eq(x: float, y: float):
+    return x == y
+
+def max(x: float, y: float):
+    return x if x >= y else y
+
+def is_close(x: float, y: float):
+    return math.isclose(x, y)
+
+def sigmoid(x: float):
+    return 1 / (1 + math.e ** neg(x))
+
+def relu(x: float):
+    return max(0, x)
+
+def log(x: float):
+    return math.log(x)
+
+def exp(base: float, ex: float):
+    return pow(base, ex)
+
+def inv(x: float):
+    return 1 / x
+
+'''
+d/dx(ln(x)) = 1/x
+'''
+def log_back(x: float, y: float):
+    return y / x 
+
+def inv_back(x: float, y: float):
+    return neg(1 / exp(x, 2)) * y
+
+def relu_back(x: float, y: float):
+    return (1.0 if x > 0 else 0.0) *  y
 
 # ## Task 0.3
 
@@ -52,3 +102,8 @@ from typing import Callable, Iterable
 
 
 # TODO: Implement for Task 0.3.
+
+def map(it: Iterable, la: Callable):
+    return [la(x) for x in it]
+
+def zipWith(it: Iterable, la(Any, Any): Callable)
