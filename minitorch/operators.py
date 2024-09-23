@@ -1,6 +1,7 @@
 """Collection of the core mathematical operators used throughout the code base."""
 
 import math
+import typing
 
 # ## Task 0.1
 from typing import Callable, Iterable
@@ -106,4 +107,28 @@ def relu_back(x: float, y: float):
 def map(it: Iterable, la: Callable):
     return [la(x) for x in it]
 
-def zipWith(it: Iterable, la(Any, Any): Callable)
+def zipWith(it1: Iterable, it2: Iterable, la: Callable[[typing.Any, typing.Any], typing.Any]):
+    return [la(x1, x2) for x1, x2 in zip(it1, it2)]
+
+def reduce(la: Callable, ite: Iterable, init: object = None):
+    it = iter(ite)
+    if init is None:
+        value = next(it)
+    else:
+        value = init
+    for e in it:
+        value = la(value, e)
+    return value
+
+def negList(l: list[float]):
+    return map(l, neg)
+
+def addLists(l1: list[float], l2: list[float]):
+    return zipWith(l1, l2, add)
+
+def sum(l: list[float]):
+    return reduce(sum, l, 0)
+
+def prod(l: list[float]):
+    return reduce(mul, l, 1)
+
