@@ -4,6 +4,8 @@ import pytest
 from hypothesis import given
 from hypothesis.strategies import lists
 
+import math
+
 from minitorch import MathTest
 import minitorch
 from minitorch.operators import (
@@ -107,14 +109,17 @@ def test_sigmoid(a: float) -> None:
     * It crosses 0 at 0.5
     * It is  strictly increasing.
     """
-    r = sigmoid(a)
+    
+    def es(x: float): return round(x, ndigits=5)
+    
+    r = es(sigmoid(a))
     assert r >= 0.0 and r <= 1.0
-    assert 1 - r == sigmoid(neg(r))
-    assert sigmoid(0.5) == 0.0
+    assert es(1 - r) == es(sigmoid(neg(a)))
+    assert es(sigmoid(0.0)) == 0.5
     
     prev = 0.0
     for i in range(1, 11):
-        cur = sigmoid(i / 10.0)
+        cur = es(sigmoid(i / 10.0))
         assert cur > prev
         prev = cur
 
@@ -123,7 +128,7 @@ def test_sigmoid(a: float) -> None:
 @given(small_floats, small_floats, small_floats)
 def test_transitive(a: float, b: float, c: float) -> None:
     """Test the transitive property of less-than (a < b and b < c implies a < c)"""
-    assert a < b and b < c and a < c
+    assert not ((a < b and b < c) and not (a < c))
 
 
 @pytest.mark.task0_2
@@ -172,14 +177,13 @@ def test_sum_distribute(ls1: List[float], ls2: List[float]) -> None:
     """Write a test that ensures that the sum of `ls1` plus the sum of `ls2`
     is the same as the sum of each element of `ls1` plus each element of `ls2`.
     """
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
-
+    assert math.isclose(sum(ls1) + sum(ls2), sum([ls1[i] + ls2[i] for i in range(min(len(ls1), len(ls2)))]))
+  
 
 @pytest.mark.task0_3
 @given(lists(small_floats))
 def test_sum(ls: List[float]) -> None:
-    assert_close(sum(ls), minitorch.operators.sum(ls))
+    assert_close(sum(ls), minitorch.operators.sum(ls))  
 
 
 @pytest.mark.task0_3

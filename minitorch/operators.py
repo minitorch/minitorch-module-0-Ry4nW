@@ -39,7 +39,7 @@ def mul(x: float, y: float):
     return x * y
 
 def id(x: float):
-    return id(x)
+    return x
 
 def add(x: float, y: float):
     return x + y
@@ -68,8 +68,8 @@ def relu(x: float):
 def log(x: float):
     return math.log(x)
 
-def exp(base: float, ex: float):
-    return pow(base, ex)
+def exp(ex: float):
+    return math.e ** ex
 
 def inv(x: float):
     return 1 / x
@@ -81,7 +81,7 @@ def log_back(x: float, y: float):
     return y / x 
 
 def inv_back(x: float, y: float):
-    return neg(1 / exp(x, 2)) * y
+    return neg(1 / (x**2)) * y
 
 def relu_back(x: float, y: float):
     return (1.0 if x > 0 else 0.0) *  y
@@ -117,7 +117,7 @@ def reduce(la: Callable, ite: Iterable, init: object = None):
     else:
         value = init
     for e in it:
-        value = la(value, e)
+        value = la(e, value)
     return value
 
 def negList(l: list[float]):
@@ -126,8 +126,8 @@ def negList(l: list[float]):
 def addLists(l1: list[float], l2: list[float]):
     return zipWith(l1, l2, add)
 
-def sum(l: list[float]):
-    return reduce(sum, l, 0)
+def sum(l: list[float], init: float = 0.0):
+    return reduce(sum, l, init)
 
 def prod(l: list[float]):
     return reduce(mul, l, 1)

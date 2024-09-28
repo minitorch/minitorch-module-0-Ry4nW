@@ -64,13 +64,13 @@ class MathTest(Generic[A]):
         return operators.relu(a + 5.5)
 
     @staticmethod
+    def explog(a: A) -> A:
+        return operators.log(a + 100000) + operators.exp(a - 200)
+    
+    @staticmethod
     def exp(a: A) -> A:
         "Apply exp to a smaller value"
         return operators.exp(a - 200)
-
-    @staticmethod
-    def explog(a: A) -> A:
-        return operators.log(a + 100000) + operators.exp(a - 200)
 
     @staticmethod
     def add2(a: A, b: A) -> A:
@@ -175,14 +175,14 @@ class MathTestVariable(MathTest):
     @staticmethod
     def relu(x):
         return (x + 5.5).relu()
+    
+    @staticmethod
+    def explog(a):
+        return (a + 100000).log() + (a - 200).exp()
 
     @staticmethod
     def exp(a):
         return (a - 200).exp()
-
-    @staticmethod
-    def explog(a):
-        return (a + 100000).log() + (a - 200).exp()
 
     @staticmethod
     def sum_red(a):
